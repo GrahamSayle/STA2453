@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="statistical_learning_presentation_files/libs/clipboard/clipboard.min.js"></script>
+<script src="statistical_learning_presentation_files/libs/quarto-html/tabby.min.js"></script>
+<script src="statistical_learning_presentation_files/libs/quarto-html/popper.min.js"></script>
+<script src="statistical_learning_presentation_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="statistical_learning_presentation_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="statistical_learning_presentation_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="statistical_learning_presentation_files/libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.10.18">
+
+  <meta name="author" content="Bolong Tang · Peize Zhang · Yi Zhi Zhang">
+  <meta name="dcterms.date" content="2026-09-21">
+  <title>Statistical Learning: An Introduction</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="statistical_learning_presentation_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="statistical_learning_presentation_files/libs/revealjs/dist/reveal.css">
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="statistical_learning_presentation_files/libs/revealjs/dist/theme/quarto-0427d8d92a431aa6a6430e53ec02a470.css">
+  <link href="statistical_learning_presentation_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="statistical_learning_presentation_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="statistical_learning_presentation_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="statistical_learning_presentation_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="quarto-title-block center">
+  <h1 class="title">Statistical Learning: An Introduction</h1>
+  <p class="subtitle">ISLR, Chapter 2.1</p>
+
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Bolong Tang · Peize Zhang · Yi Zhi Zhang
+</div>
+</div>
+</div>
+
+  <p class="date">2026-09-21</p>
+</section>
+<section id="talk-overview" class="slide level2 smaller center">
+<h2>Talk Overview</h2>
+<ul>
+<li>Section 2.1 of <em>An Introduction to Statistical Learning</em>:
+<ol type="1">
+<li>What Is Statistical Learning?</li>
+<li>Why Estimate <em>f</em>?</li>
+<li>How Do We Estimate <em>f</em>?</li>
+<li>The Trade-Off Between Prediction Accuracy and Model Interpretability</li>
+<li>Supervised vs.&nbsp;Unsupervised Learning</li>
+<li>Regression vs.&nbsp;Classification Problems</li>
+</ol></li>
+</ul>
+</section>
+<section id="knowing-by-predicting" class="slide level2 center">
+<h2>Knowing by Predicting</h2>
+<ul>
+<li>What’s common between a store’s sales, a car’s rating, an university’s reputation, and your expected lifespan?</li>
+</ul>
+</section>
+<section id="knowing-by-predicting-1" class="slide level2 center">
+<h2>Knowing by Predicting</h2>
+<ul>
+<li>What’s common between a store’s sales, a car’s rating, an university’s reputation, and your expected lifespan?</li>
+<li>They are all factors that can be predicted from other factors.</li>
+</ul>
+</section>
+<section id="knowing-by-predicting-2" class="slide level2 center">
+<h2>Knowing by Predicting</h2>
+<ul>
+<li>A store’s sales: budget across TV, radio, and newspaper, etc.</li>
+<li>A car’s rating: newness, size, maximal acceleration, comfort level, etc.</li>
+<li>A university’s reputation: faculty members’ total amount of citations, academic awards won; its acceptance rate, external rankings, its employer trust, etc.</li>
+<li>Your expected lifespan: hours of sleep per day, calories intake, smoke or not, family earning bracket, disabilities, etc.</li>
+</ul>
+<aside class="notes">
+<p>That’s right!</p>
+<p>In short, each of them may be seen as an output, aka a response or dependent variable, a function of other predictors, aka features, indep vars, etc.</p>
+<p>In order to develop models which best predict those outputs, we want the models to approximate the function as closely as possible, based on only the data we know. This is the whole purpose of statistical learning, which is the topic of this semester.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="what-is-statistical-learning" class="slide level2 center">
+<h2>What Is Statistical Learning?</h2>
+<ul>
+<li>We observe <strong>inputs</strong> (<span class="math inline">\(X_1, X_2, \dots, X_p\)</span>) — also called <em>predictors</em>, <em>independent variables</em>, or <em>features</em></li>
+<li>We observe an <strong>output</strong> (<span class="math inline">\(Y\)</span>) — also called the <em>response</em> or <em>dependent variable</em> <span class="math display">\[ Y = f(X) + \epsilon \]</span></li>
+<li><span class="math inline">\(f\)</span>: an unknown, fixed function representing the systematic information <span class="math inline">\(X\)</span> provides about <span class="math inline">\(Y\)</span></li>
+<li><span class="math inline">\(\epsilon\)</span>: a random error term, independent of <span class="math inline">\(X\)</span>, with mean zero</li>
+</ul>
+<aside class="notes">
+<p>Motivate with the Advertising dataset: sales as a function of TV, radio, and newspaper budgets. Goal is to estimate f.</p>
+<p>Our model would not be perfect. “All models are wrong, but some are useful.” So our goal is not to eliminate errors, but to keep the error reasonably small.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="from-one-predictor-to-many" class="slide level2 center">
+<h2>From One Predictor to Many</h2>
+<ul>
+<li>With a single predictor, <span class="math inline">\(f\)</span> can be visualized as a curve (e.g., income vs.&nbsp;years of education)</li>
+</ul>
+<!-- Insert Figure 2.2 (Income vs. years of education) and Figure 2.3 (two-predictor surface) here -->
+
+<img data-src="images/fig2_1_advertising.png" alt="Advertising data set: single predictors" class="r-stretch"></section>
+<section id="from-one-predictor-to-many-1" class="slide level2 center">
+<h2>From One Predictor to Many</h2>
+<ul>
+<li>With multiple predictors, <span class="math inline">\(f\)</span> becomes a surface in higher-dimensional space (e.g., income as a function of <em>years of education</em> <strong>and</strong> <em>seniority</em>)</li>
+</ul>
+
+<img data-src="images/fig2_2_income_education.png" alt="Income data set: multiple predictors" class="r-stretch"></section>
+<section id="why-estimate-f-prediction" class="slide level2 center">
+<h2>Why Estimate <em>f</em>? — Prediction</h2>
+<ul>
+<li>The true <span class="math inline">\(f\)</span> is generally <strong>unknown</strong> — we must estimate it from observed data</li>
+<li>When <span class="math inline">\(X\)</span> is available but <span class="math inline">\(Y\)</span> is not, we predict:</li>
+</ul>
+<p><span class="math display">\[ \hat{Y} = \hat{f}(X) \]</span></p>
+<ul>
+<li><span class="math inline">\(\hat{f}\)</span> is often treated as a <strong>black box</strong> — accuracy matters more than interpretability</li>
+</ul>
+</section>
+<section id="why-estimate-f-prediction-error" class="slide level2 center">
+<h2>Why Estimate <em>f</em>? — Prediction Error</h2>
+<ul>
+<li>Prediction accuracy depends on two sources of error:</li>
+</ul>
+<p><span class="math display">\[ E(Y - \hat{Y})^2 = \underbrace{[f(X) - \hat{f}(X)]^2}_{\text{Reducible}} + \underbrace{\text{Var}(\epsilon)}_{\text{Irreducible}} \]</span></p>
+<ul>
+<li><strong>Reducible error</strong>: can be lowered by choosing a better statistical learning method (better approximator)</li>
+<li><strong>Irreducible error</strong>: a hard upper bound on accuracy — caused by unmeasured variables or inherent randomness in <span class="math inline">\(Y\)</span></li>
+</ul>
+<aside class="notes">
+<p>Example: predicting a patient’s risk of adverse drug reaction from blood-sample variables.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="why-estimate-f-inference" class="slide level2 center">
+<h2>Why Estimate <em>f</em>? — Inference</h2>
+<p>Sometimes the goal is <em>understanding</em>, not just predicting. Key inference questions:</p>
+<ul>
+<li><strong>Which predictors</strong> are associated with the response?</li>
+<li><strong>What is the relationship</strong> between each predictor and the response (positive, negative, complex)?</li>
+<li>Can the relationship be <strong>adequately summarized linearly</strong>, or is it more complicated?</li>
+</ul>
+</section>
+<section id="why-estimate-f-prediction-vs-inference" class="slide level2 center">
+<h2>Why Estimate <em>f</em>? — Prediction vs Inference</h2>
+<ul>
+<li>Prediction example: direct-marketing campaign (who will respond?)</li>
+<li>Inference example: which advertising media drive sales, and by how much?</li>
+<li>Some problems need <strong>both</strong> (e.g., real estate pricing)</li>
+<li>Real estate pricing:</li>
+<li>Prediction: How much will this house be worth?</li>
+<li>Inference: Why does this house worth this much?</li>
+</ul>
+<aside class="notes">
+<p>Prediction: It has 5 bedrooms, 3 bathrooms, 2 living rooms, 1 kitchen, etc., totally 300 square meters. Inference: Is it the size? the amount of rooms? or it being in a wealthy neighborhood? proximity to subway station?</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="training-data-the-estimation-task" class="slide level2 center">
+<h2>Training Data &amp; the Estimation Task</h2>
+<ul>
+<li>We observe <span class="math inline">\(n\)</span> data points: <span class="math inline">\(\{(x_1, y_1), (x_2, y_2), \dots, (x_n, y_n)\}\)</span> — the <strong>training data</strong></li>
+<li>Goal: apply a statistical learning method to the training data to estimate <span class="math inline">\(f\)</span>, so that <span class="math inline">\(Y \approx \hat{f}(X)\)</span> for any new observation</li>
+<li>Two broad families of approaches:
+<ul>
+<li><strong>Parametric methods</strong></li>
+<li><strong>Non-parametric methods</strong></li>
+</ul></li>
+</ul>
+</section>
+<section id="parametric-methods" class="slide level2 center">
+<h2>Parametric Methods</h2>
+<p>Two-step model-based approach:</p>
+<ol type="1">
+<li><strong>Assume a functional form</strong> for <span class="math inline">\(f\)</span> — e.g., a multiple linear regression model:</li>
+</ol>
+<p><span class="math display">\[ f(X) = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \cdots + \beta_p X_p \]</span></p>
+<ol start="2" type="1">
+<li><strong>Fit / train</strong> the model using the training data — e.g., via (ordinary) least squares, to estimate <span class="math inline">\(\beta_0, \beta_1, \dots, \beta_p\)</span></li>
+</ol>
+</section>
+<section id="parametric-methods-1" class="slide level2 center">
+<h2>Parametric Methods</h2>
+<ul>
+<li>Reduces the problem from estimating an arbitrary <span class="math inline">\(p\)</span>-dimensional function to estimating <span class="math inline">\(p+1\)</span> coefficients</li>
+<li>Risk: if the assumed form is far from the true <span class="math inline">\(f\)</span>, the estimate will be poor</li>
+</ul>
+<!-- Insert Figure 2.4 here: linear model fit to Income data -->
+
+<img data-src="images/fig2_4_linear_fit.png" alt="Linear model fit to the Income data" class="r-stretch"></section>
+<section id="non-parametric-methods" class="slide level2 center">
+<h2>Non-Parametric Methods</h2>
+<ul>
+<li>Make <strong>no explicit assumption</strong> about the functional form of <span class="math inline">\(f\)</span></li>
+<li><strong>Advantage</strong>: can accurately fit a much wider range of shapes for <span class="math inline">\(f\)</span></li>
+</ul>
+<!-- Insert Figure 2.5 (smooth spline) and Figure 2.6 (rough / overfit spline) side by side -->
+
+<img data-src="images/fig2_5_smooth_spline.png" alt="Smooth thin-plate spline fit" class="r-stretch"></section>
+<section id="non-parametric-methods-1" class="slide level2 center">
+<h2>Non-Parametric Methods</h2>
+<ul>
+<li><strong>Disadvantages</strong>:</li>
+<li>requires a far larger number of observations than parametric approaches</li>
+<li>may easily overfit</li>
+</ul>
+</section>
+<section id="non-parametric-methods-2" class="slide level2 center">
+<h2>Non-Parametric Methods</h2>
+
+<img data-src="images/fig2_6_rough_spline.png" alt="Rough thin-plate spline fit with overfitting" class="r-stretch"><ul>
+<li>The rough fit makes <strong>zero errors on training data</strong> but is far more variable than the true <span class="math inline">\(f\)</span> — this is <strong>overfitting</strong></li>
+</ul>
+</section>
+<section id="prediction-accuracy-vs.-interpretability" class="slide level2 center">
+<h2>Prediction Accuracy vs.&nbsp;Interpretability</h2>
+<ul>
+<li>More <strong>flexible</strong> methods can generate a wider range of shapes for <span class="math inline">\(f\)</span></li>
+<li>But increased flexibility generally means <strong>decreased interpretability</strong></li>
+</ul>
+<!-- Insert Figure 2.7 here: flexibility vs. interpretability plot -->
+
+<img data-src="images/fig2_7_flexibility_interpretability.png" style="width:50.0%" alt="Trade-off between flexibility and interpretability across methods" class="r-stretch"></section>
+<section id="supervised-vs.-unsupervised-learning" class="slide level2 center">
+<h2>Supervised vs.&nbsp;Unsupervised Learning</h2>
+
+<img data-src="images/supervised_vs_unsupervised.png" style="width:70.0%" class="r-stretch"></section>
+<section id="supervised-vs.-unsupervised-learning-rigorous" class="slide level2 center">
+<h2>Supervised vs.&nbsp;Unsupervised Learning (rigorous)</h2>
+<div class="columns">
+<div class="column" style="width:47%;">
+<p>Supervised learning: observe</p>
+<p><span class="math display">\[
+(X,Y) \sim P_{X,Y}
+\]</span></p>
+<p><strong>Goal:</strong> learn a function <span class="math inline">\(f\)</span> to predict <span class="math inline">\(Y\)</span> from <span class="math inline">\(X\)</span>.</p>
+<p><span class="math display">\[
+f(X) \approx Y
+\]</span></p>
+</div><div class="column" style="width:47%;">
+<p>Unsupervised learning: observe</p>
+<p><span class="math display">\[
+X \sim P_X
+\]</span></p>
+<p><strong>Goal:</strong> discover the underlying structure of <span class="math inline">\(P_X\)</span>.</p>
+</div></div>
+</section>
+<section id="exam-score-prediction" class="slide level2 smaller center">
+<h2>Exam score prediction</h2>
+<div class="columns">
+<div class="column" style="width:40%;">
+<p><img data-src="images/linear_reg.png" class="" style="width:100.0%" alt="A straight line fitted to observations, illustrating linear regression."></p>
+</div><div class="column" style="width:58%;">
+<div style="font-size: 0.85em;">
+<p><strong>Input and response</strong></p>
+<ul>
+<li><span class="math inline">\(X\)</span>: number of hours studied.</li>
+<li><span class="math inline">\(Y\)</span>: exam score, measured in points.</li>
+</ul>
+<p><strong>Model: simple linear regression</strong></p>
+<p><span class="math display">\[
+\begin{aligned}
+f(X) &amp;= \beta_0 + \beta_1 X \\
+Y &amp;= f(X) + \epsilon
+\end{aligned}
+\]</span></p>
+<p><span class="math inline">\(\beta_0\)</span> is the intercept; <span class="math inline">\(\beta_1\)</span> is the slope. <span class="math inline">\(\epsilon\)</span> captures variation not explained by study hours.</p>
+</div>
+</div></div>
+</section>
+<section id="email-spam-detection" class="slide level2 smaller center">
+<h2>Email spam detection</h2>
+<div class="columns">
+<div class="column" style="width:40%;">
+<p><img data-src="images/logistic_reg.png" class="" style="width:100.0%" alt="An S-shaped logistic curve illustrating probabilities between zero and one."></p>
+</div><div class="column" style="width:58%;">
+<div style="font-size: 0.85em;">
+<p><strong>Input and response</strong></p>
+<ul>
+<li><span class="math inline">\(X\)</span>: email features (e.g.&nbsp;word frequencies and link count).</li>
+<li><span class="math inline">\(Y=1\)</span>: spam; <span class="math inline">\(Y=0\)</span>: not spam.</li>
+</ul>
+<p><strong>Model: logistic regression</strong></p>
+<p><span class="math display">\[
+\begin{aligned}
+f(X) &amp;= P(Y=1\mid X) = \sigma(z) \\
+\sigma(z) &amp;= \frac{1}{1+e^{-z}}
+\end{aligned}
+\]</span></p>
+<p>Here, <span class="math inline">\(z=\beta_0+\beta_1X_1+\cdots+\beta_pX_p\)</span>. The <strong>logistic function</strong> <span class="math inline">\(\sigma\)</span> returns a probability.</p>
+</div>
+</div></div>
+</section>
+<section id="image-recognition" class="slide level2 smaller center">
+<h2>Image recognition</h2>
+<div class="columns">
+<div class="column" style="width:55%;">
+<p><img data-src="images/cat.png" class="" style="width:100.0%" alt="A cat image represented by pixel values, with predicted class probabilities."></p>
+</div><div class="column" style="width:43%;">
+<h3 id="from-pixels-to-labels">From pixels to labels</h3>
+<p>We observe <span class="math inline">\(n\)</span> images with annotated labels.</p>
+<ul>
+<li><span class="math inline">\(X_i\)</span>: the pixel values of image <span class="math inline">\(i\)</span>.</li>
+<li><span class="math inline">\(Y_i\)</span>: its class label.</li>
+</ul>
+<p><span class="math display">\[
+Y_i \in \{\text{cat},\,\text{dog},\,\text{hat},\,\text{mug}\}
+\]</span></p>
+<p><span class="math inline">\(i = 1,\ldots,n\)</span>.</p>
+<p><strong>Goal:</strong> predict the label of a new image.</p>
+</div></div>
+</section>
+<section id="unsupervised-learning---clustering" class="slide level2 smaller center">
+<h2>Unsupervised learning - clustering</h2>
+<div class="columns">
+<div class="column" style="width:65%;">
+<p><img data-src="images/clustering.png" class="" style="width:100.0%" alt="Unlabeled observations and three clusters based on symptom frequency and severity."></p>
+</div><div class="column" style="width:35%;">
+<div style="font-size: 0.85em;">
+<p><strong>Finding groups without labels</strong></p>
+<ul>
+<li>We observe features <span class="math inline">\(X\)</span>, without response labels <span class="math inline">\(Y\)</span>.</li>
+<li>Clustering groups observations with similar feature values.</li>
+<li>Here, three clusters are identified based on symptom frequency and severity.</li>
+</ul>
+</div>
+</div></div>
+<div style="font-size: 0.85em;">
+<p><strong>A classical algorithm: K-means</strong></p>
+<p><a href="https://stanford.edu/~cpiech/cs221/handouts/kmeans.html">Read more</a></p>
+</div>
+</section>
+<section id="the-crabs-from-naples-bay" class="slide level2 center">
+<h2>The crabs from Naples bay</h2>
+<p>In 1892, scientists collected data on populations of the crab, Carcinus maenas, and recorded the ratio of forehead width to the body length…</p>
+<ul>
+<li>What is the distribution of the ratio?</li>
+</ul>
+</section>
+<section id="the-crabs-from-naples-bay-1" class="slide level2 center">
+<h2>The crabs from Naples bay</h2>
+
+<img data-src="images/skewed.png" style="width:70.0%" class="r-stretch"><p>Why doesn’t the ratio follow a Gaussian distribution?</p>
+</section>
+<section id="one-guess" class="slide level2 smaller center">
+<h2>One guess…</h2>
+<div class="columns">
+<div class="column" style="width:55%;">
+<p><img data-src="images/GMM.png" class="" style="width:100.0%"></p>
+</div><div class="column" style="width:45%;">
+<p>The observed distribution may combine <strong>two underlying populations</strong>.</p>
+<p>Each population is modeled by a Gaussian distribution.</p>
+<p>This is a <strong>Gaussian mixture model</strong>.</p>
+<p><a href="https://mbernste.github.io/posts/gmm_em/">Read more</a></p>
+</div></div>
+<p><span class="math display">\[
+X \sim \pi_1\,\mathrm{N}(\mu_1,\sigma_1^2)
++ (1-\pi_1)\,\mathrm{N}(\mu_2,\sigma_2^2),
+\qquad 0 \leq \pi_1 \leq 1.
+\]</span></p>
+</section>
+<section id="difficulties-of-unsupervised-learning-problems" class="slide level2 smaller center">
+<h2>Difficulties of unsupervised learning problems</h2>
+<ul>
+<li>The same observed pattern may have multiple explanations—for example, a single non-Gaussian population or a mixture of two Gaussian populations.</li>
+<li>Inferring structure requires assumptions about the number of underlying groups and their distributions.</li>
+<li>A model that fits the data well does not necessarily recover the true underlying structure.</li>
+</ul>
+</section>
+<section id="regression-vs.-classification-problems" class="slide level2 center">
+<h2>Regression vs.&nbsp;Classification Problems</h2>
+<p><strong>Quantitative</strong> – Takes numerical values</p>
+<p>For example: Age, income, value of a house, stock price</p>
+<p><strong>Qualitative</strong> (also commonly called categorical) – Takes one of <span class="math inline">\(K\)</span> classes</p>
+<p>For example: Default? (Yes or no), Disease diagnosis (positive or negative), marital status</p>
+</section>
+<section id="in-general-response-determines-our-problem" class="slide level2 center">
+<h2>In general, response determines our problem</h2>
+<ul>
+<li>If our response is quantitative, we have a regression problem.
+<ul>
+<li>For example, least squares to predict house value</li>
+</ul></li>
+<li>If our response is qualitative, we have a classification problem.
+<ul>
+<li>For example, a logistic regression to predict yes or no default</li>
+</ul></li>
+</ul>
+</section>
+<section id="of-course-there-are-nuances" class="slide level2 center">
+<h2>Of course there are nuances!</h2>
+<p>Like the fact that input features can be a mix. I.e. using qualitative data (name of neighborhood) to regress house price.</p>
+<p>And how logistic REGRESSION being a CLASSIFICATION method. But also estimates class probabilities, which are numbers.</p>
+</section>
+<section id="knn-works-for-both" class="slide level2 center">
+<h2>KNN works for both!</h2>
+<p>To predict a point <span class="math inline">\(x_0\)</span>, find the <span class="math inline">\(K\)</span> training observations closest to <span class="math inline">\(x_0\)</span> (and call this set <span class="math inline">\(N_0\)</span>). Then summarize their responses.</p>
+<p>For regression (with a quantitative <span class="math inline">\(y\)</span>)</p>
+<ul>
+<li>Neighbor responses are numbers</li>
+<li>Summary is an average</li>
+<li>Formula is</li>
+</ul>
+<p><span class="math display">\[\hat f(x_0) = \frac{1}{K}\sum_{x_i \in N_0} y_i\]</span></p>
+</section>
+<section id="knn-works-for-both-continued" class="slide level2 center">
+<h2>KNN works for both! (continued)</h2>
+<p>For classification (qualitative <span class="math inline">\(y\)</span>)</p>
+<ul>
+<li>Neighbor responses are labels</li>
+<li>Summary is a majority vote</li>
+<li>Formula is</li>
+</ul>
+<p><span class="math display">\[\hat P(Y = j \mid x_0) = \frac{1}{K}\sum_{x_i \in N_0} I(y_i = j)\]</span></p>
+<p>where <span class="math inline">\(I(y_i = j)\)</span> is 1 if neighbor <span class="math inline">\(i\)</span> is in class <span class="math inline">\(j\)</span> and 0 otherwise.</p>
+</section>
+<section id="why-does-knn-work-for-both" class="slide level2 center">
+<h2>Why does KNN work for both?</h2>
+<ul>
+<li>KNN assumes no functional form for <span class="math inline">\(f(X)\)</span>.</li>
+<li>It is non-parametric, nothing requires a numeric <span class="math inline">\(y\)</span>.</li>
+<li>All it really needs is:
+<ul>
+<li>Some notion of “closest” in the predictor space</li>
+<li>Some way to summarize the response of the neighbors</li>
+</ul></li>
+<li>In contrast, least squares is built upon squared residuals, which very much requires a numeric response.</li>
+</ul>
+</section>
+<section id="example" class="slide level2 center">
+<h2>Example</h2>
+<p>A new house: <strong>1,800 sq ft, 15 years old</strong>. Find its <span class="math inline">\(K = 5\)</span> nearest neighbors.</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Neighbor</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Sale price ($K)</td>
+<td>410</td>
+<td>430</td>
+<td>445</td>
+<td>460</td>
+<td>480</td>
+</tr>
+<tr class="even">
+<td>Sold above asking?</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>No</td>
+<td>Yes</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Regression</strong> (response = price): average → <strong>$445K</strong></li>
+<li><strong>Classification</strong> (response = above asking?): 3 Yes, 2 No → vote <strong>Yes</strong>, estimated P(Yes) = 0.6</li>
+</ul>
+</section>
+<section id="example-1" class="slide level2 center">
+<h2>Example</h2>
+<div id="4e41f141" class="cell" data-fig-height="5" data-fig-width="11" data-execution_count="1">
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="statistical_learning_presentation_files/figure-revealjs/cell-2-output-1.png" class="quarto-figure quarto-figure-center" width="902" height="441"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="another-look-at-the-bias-variance-tradeoff" class="slide level2 center">
+<h2>Another look at the bias-variance tradeoff</h2>
+<ul>
+<li><span class="math inline">\(K = 1\)</span>: interpolates training data, low bias, high variance</li>
+<li>Larger <span class="math inline">\(K\)</span>: Smoother fit, higher bias, lower variance</li>
+<li>How do we choose the best <span class="math inline">\(K\)</span>? Test-error estimates will likely be in a future presentation!</li>
+</ul>
+</section>
+<section id="k-1-vs.-a-smoother-fit" class="slide level2 center">
+<h2><span class="math inline">\(K = 1\)</span> vs.&nbsp;a smoother fit</h2>
+<div id="f1cf9293" class="cell" data-fig-height="4.6" data-fig-width="11" data-execution_count="2">
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="statistical_learning_presentation_files/figure-revealjs/cell-3-output-1.png" class="quarto-figure quarto-figure-center" width="1046" height="431"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="sneak-peek-of-chapter-3" class="slide level2 center">
+<h2>Sneak peek of chapter 3</h2>
+<ul>
+<li>“Works for both” does not always mean the best</li>
+<li>You will see how, if a relationship is roughly linear, linear regression often beats KNN</li>
+<li>Curse of dimensionality</li>
+<li>Linear regression gives coefficients and p-values, KNN gives predictions only. Interpretability.</li>
+</ul>
+</section>
+<section class="slide level2 center">
+
+<p>When we choose methods, we tend to choose based on whether the response is quantitative or qualitative.</p>
+<p>Whether the predictors are quantitative or qualitative is “generally considered less important.”</p>
+<p>GIVEN THAT: your qualitative predictors are coded properly?</p>
+<p>How do I code qualitative predictors properly? Go read 3.3.1</p>
+</section>
+<section id="thank-you" class="slide level2 center">
+<h2>Thank You</h2>
+<p><strong>Questions?</strong></p>
+
+</section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<div class="footer footer-default">
+<p>Statistical Learning — Chapter 2.1</p>
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="statistical_learning_presentation_files/libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="statistical_learning_presentation_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="statistical_learning_presentation_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="statistical_learning_presentation_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="statistical_learning_presentation_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="statistical_learning_presentation_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="statistical_learning_presentation_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="statistical_learning_presentation_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="statistical_learning_presentation_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="statistical_learning_presentation_files/libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: true,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'slide',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1050,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    <script id="quarto-html-after-body" type="application/javascript">
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
+          }
+          return false;
+        }
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Copied!");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Copied!");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
+          }
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+        }
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp('/' + window.location.host + '/');
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
+            }
+          }
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
+          }
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
+          }
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
+        }
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
+          });
+        }
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
+    
+
+</body></html>

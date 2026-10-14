@@ -1,0 +1,174 @@
+---
+title: "Statistical Learning: Hands-On Workshop"
+subtitle: "ISLR §2.1 — Companion Code"
+author: "Bolong Tang · Peize Zhang · Yi Zhi Zhang"
+date: today
+format:
+  html:
+    toc: true
+    code-fold: false
+    code-tools: true
+execute:
+  warning: false
+  message: false
+---
+
+## Before We Start
+
+This is a ~10-minute hands-on companion to the slides. Work through each
+section in order. Every chunk below runs as-is — the **YOUR TURN** callouts
+ask you to change a value and re-run the chunk to see what happens.
+
+```{r}
+#| label: setup
+# install.packages(c("class", "FNN", "ggplot2"))
+library(class)   # KNN classification
+library(FNN)     # KNN regression
+library(ggplot2)
+theme_set(theme_minimal())
+```
+
+## 1. Estimating *f*: Simple Linear Regression
+
+Recall from the slides: exam score $Y$ as a function of hours studied $X$,
+
+$$ Y = f(X) + \epsilon, \qquad f(X) = \beta_0 + \beta_1 X $$
+
+```{r}
+#| label: exam-data
+set.seed(2026)
+n     <- 60
+hours <- runif(n, 0, 10)
+score <- 50 + 4.5 * hours + rnorm(n, sd = 8)
+exam  <- data.frame(hours, score)
+
+fit_lm <- lm(score ~ hours, data = exam)
+summary(fit_lm)
+```
+
+```{r}
+#| label: exam-plot
+ggplot(exam, aes(hours, score)) +
+  geom_point(alpha = 0.6) +
+  geom_smooth(method = "lm", se = FALSE, color = "steelblue") +
+  labs(title = "Simple Linear Regression: Exam Score vs. Hours Studied",
+       x = "Hours Studied", y = "Exam Score")
+```
+
+```{r}
+#| label: exam-predict
+predict(fit_lm, newdata = data.frame(hours = 6))
+```
+
+> **YOUR TURN:** What are $\hat\beta_0$ and $\hat\beta_1$ from the summary
+> above? Change `hours = 6` in the last chunk to a few other values and
+> re-run — does the predicted score change the way you'd expect from the
+> slope?
+
+## 2. Logistic Regression: Spam Detection
+
+```{r}
+#| label: spam-data
+set.seed(2026)
+n          <- 200
+link_count <- rpois(n, lambda = 2)
+caps_ratio <- runif(n, 0, 1)
+z    <- -2 + 1.1 * link_count + 3 * caps_ratio
+p    <- 1 / (1 + exp(-z))
+spam <- rbinom(n, 1, p)
+email <- data.frame(link_count, caps_ratio, spam)
+
+fit_glm <- glm(spam ~ link_count + caps_ratio, data = email, family = binomial)
+summary(fit_glm)
+```
+
+```{r}
+#| label: spam-predict
+new_email <- data.frame(link_count = 4, caps_ratio = 0.6)
+predict(fit_glm, newdata = new_email, type = "response")
+```
+
+> **YOUR TURN:** Edit `link_count` and `caps_ratio` in `new_email` above.
+> Can you find a combination where the predicted probability crosses 0.5
+> (the usual classification threshold)?
+
+## 3. KNN Works for Both
+
+Same setup as the house example on the slides: predict a new house's price
+(regression) and whether it sold above asking (classification) from its
+5 nearest neighbors.
+
+```{r}
+#| label: house-data
+house <- data.frame(
+  sqft  = c(1750, 1820, 1690, 1905, 1760, 1650, 2000, 1580, 1880, 1720),
+  age   = c(12, 8, 20, 5, 15, 25, 3, 30, 10, 18),
+  price = c(410, 430, 395, 460, 415, 380, 480, 360, 445, 405),
+  above_asking = factor(c("Yes","Yes","No","Yes","No","No","Yes","No","Yes","No"))
+)
+
+new_house <- data.frame(sqft = 1800, age = 15)
+```
+
+```{r}
+#| label: knn-regression
+# KNN regression: predict price
+knn_price <- knn.reg(train = house[, c("sqft", "age")],
+                      test  = new_house,
+                      y     = house$price,
+                      k     = 5)
+knn_price$pred
+```
+
+```{r}
+#| label: knn-classification
+# KNN classification: predict above/below asking
+knn_class <- knn(train = house[, c("sqft", "age")],
+                  test  = new_house,
+                  cl    = house$above_asking,
+                  k     = 5)
+knn_class
+```
+
+> **YOUR TURN:** Re-run both chunks with `k = 1` and `k = 9` (just edit the
+> `k = ` argument). How does the price prediction move? Also — `sqft` and
+> `age` are on very different scales, so distance is dominated by `sqft`.
+> Try `scale(house[, c("sqft","age")])` in place of the raw columns and see
+> if the prediction changes.
+
+## 4. Bias-Variance Tradeoff, Visually
+
+```{r}
+#| label: bias-variance
+set.seed(42)
+x_train <- sort(runif(40, 0, 10))
+y_train <- sin(x_train) + rnorm(40, sd = 0.3)
+x_grid  <- seq(0, 10, length.out = 200)
+
+fits <- lapply(c(1, 5, 20), function(k) {
+  pred <- knn.reg(train = matrix(x_train), test = matrix(x_grid),
+                   y = y_train, k = k)$pred
+  data.frame(x = x_grid, y = pred, K = paste0("K = ", k))
+})
+fits_df <- do.call(rbind, fits)
+
+ggplot() +
+  geom_point(data = data.frame(x_train, y_train),
+             aes(x_train, y_train), alpha = 0.4) +
+  geom_line(data = fits_df, aes(x, y, color = K), linewidth = 1) +
+  labs(title = "KNN Regression at Different K", x = "X", y = "Y", color = NULL)
+```
+
+> **YOUR TURN:** Which K looks like it's overfitting the training points?
+> Which one is too smooth (underfitting)? This is the same tradeoff from the
+> slides — small K → low bias / high variance; large K → high bias / low
+> variance.
+
+## 5. Wrap-Up Discussion (2 min)
+
+- For the exam-score data, would you trust the linear model or KNN more? Why?
+- For the spam classifier, what happens if a new email's features fall far
+  outside the training range?
+- Go back through sections 1–4: for each example, is it a **regression** or
+  **classification** problem, and is the goal **prediction** or
+  **inference**?
